@@ -1,2 +1,5 @@
-# simplejiratest
-task11
+# QA_automation
+Tests Jira:
+Login
+Logout
+CreateIssue

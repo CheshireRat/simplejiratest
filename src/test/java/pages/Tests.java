@@ -22,7 +22,7 @@ public class Tests {
     LoginPage loginPage;
 
     {
-        password = "Фифифягдф1";
+        password = "test";
     }
 
     //TODO get credentials from file

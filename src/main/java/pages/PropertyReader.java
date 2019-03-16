@@ -11,12 +11,10 @@ public class PropertyReader {
         Properties prop = new Properties();
         InputStream input = null;
         try {
-
+//TODO - find out how to avoid path and where should properties stored
             input = new FileInputStream("src\\main\\java\\pages\\jira.properties");
 
-            // load a properties file
             prop.load(input);
-
 
 
         } catch (IOException ex) {
@@ -30,8 +28,7 @@ public class PropertyReader {
                 }
             }
         }
-        //is = new FileInputStream("src/main/resources/jira.properties");
-        //property.load(fis);
+
 
         return  prop.getProperty(key);
     }

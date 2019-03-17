@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.junit4.DisplayName;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,6 +29,8 @@ public class Tests {
     }
 
     @Test
+    @DisplayName("Human-readable test name Login")
+
     public void login() {
         WebDriverWait wait = new WebDriverWait (driver, 20);
 
@@ -42,6 +45,7 @@ public class Tests {
     }
 
     @Test
+    @DisplayName("Human-readable test name")
     public void logout() {
         login ( );
         WebDriverWait wait = new WebDriverWait (driver, 20);

@@ -6,12 +6,11 @@ import java.util.Properties;
 
 public class PropertyReader {
 
-
     public String readValue(String key){
         Properties prop = new Properties();
         InputStream input = null;
         try {
-//TODO - find out how to avoid path and where should properties stored
+//TODO - find out how to avoid path and where should properties be stored
             input = new FileInputStream("src\\main\\java\\pages\\jira.properties");
 
             prop.load(input);
@@ -28,8 +27,6 @@ public class PropertyReader {
                 }
             }
         }
-
-
         return  prop.getProperty(key);
     }
 }

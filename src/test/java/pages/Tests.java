@@ -1,87 +1,93 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
-
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 
 public class Tests {
 
     WebDriver driver;
     LoginPage loginPage;
-    PropertyReader propertyReader = new PropertyReader ();
+    IssuePage issuePage;
+    MainPage mainPage;
+    PropertyReader propertyReader = new PropertyReader ( );
 
     @BeforeTest
     public void setUp() {
-        System.setProperty ("webdriver.chrome.driver", "/C:/QA/chromedriver.exe");
+        System.setProperty ("webdriver.chrome.driver", propertyReader.readValue ("chromedriverPath"));
         driver = new ChromeDriver ( );
         loginPage = new LoginPage (driver);
+        issuePage = new IssuePage (driver);
+        mainPage = new MainPage (driver);
 
     }
 
     @Test
     public void login() {
-
+        WebDriverWait wait = new WebDriverWait (driver, 20);
 
         loginPage.navigate (propertyReader.readValue ("url"));
         loginPage.enterUserName (propertyReader.readValue ("login"));
         loginPage.enterUserPassword (propertyReader.readValue ("password"));
-        loginPage.loginClick ();
+        loginPage.loginClick ( );
+        wait.until (ExpectedConditions.presenceOfElementLocated (mainPage.createIssueButton ( )));
 
-        WebElement create_link = (new WebDriverWait (driver, 10))
-                .until (ExpectedConditions.presenceOfElementLocated (loginPage.createIssueButton ()));
-
-        Assert.assertTrue (driver.findElements (loginPage.createIssueButton ()).size ( ) != 0); //Create button presented
+        Assert.assertTrue (driver.findElements (mainPage.createIssueButton ( )).size ( ) != 0); //Create button presented
 
     }
 
     @Test
     public void logout() {
         login ( );
-        driver.findElement (By.id ("header-details-user-fullname")).click ( ); //click to dropdown on logout
-        driver.findElement (By.id ("log_out")).click ( ); //click to Log Out
-        driver.findElement (By.id ("home_link")).click ( ); //navigate to dashboard page
-        //TODO move to the method, which will run before all tests
-        WebElement login = (new WebDriverWait (driver, 10))
-                .until (ExpectedConditions.presenceOfElementLocated (By.id ("home_link")));
-        Assert.assertTrue (driver.findElements (By.id ("home_link")).size ( ) != 0); //Log In button presented
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+
+        driver.findElement (mainPage.dropdownMenu ( )).click ( ); //click to dropdown on logout
+        mainPage.logoutClick ( ); //click  on logout
+        mainPage.dashboardClick ( );
+        wait.until (ExpectedConditions.presenceOfElementLocated (mainPage.dashboard ( )));
+        Assert.assertTrue (driver.findElements (mainPage.dashboard ( )).size ( ) != 0); //Log In button presented
     }
+
+    String issueType = "Task";
+    String issueSummary = "Task summary";
+    String issueDescription = "Task descr";
+    //TODO - move issuetype, summary, desc to method parameters
 
     @Test
     public void createIssue() {
-        //TODO - move issuetype, summary, desc to method parameters
+
         //TODO - add supporting for all issue types(epic not supported now)
         login ( );
         WebDriverWait wait = new WebDriverWait (driver, 20);
-        driver.findElement (By.id ("create_link")).click ( );
+
+        driver.findElement (mainPage.createIssueButton ( )).click ( );
+
+        wait.until (ExpectedConditions.presenceOfElementLocated (issuePage.issueTypeField ( )));
+
 
         //input issue type
-        driver.findElement (By.id ("issuetype-field")).click ( );
-        driver.findElement (By.id ("issuetype-field")).sendKeys ("Task");
-        driver.findElement (By.id ("issuetype-field")).sendKeys (Keys.ENTER);
-        wait.until (ExpectedConditions.elementToBeClickable (By.id ("summary")));
+        driver.findElement (issuePage.issueTypeField ( )).click ( );
+        driver.findElement (issuePage.issueTypeField ( )).sendKeys (issueType);
+        driver.findElement (issuePage.issueTypeField ( )).sendKeys (Keys.ENTER);
+        wait.until (ExpectedConditions.elementToBeClickable (issuePage.summaryField ( )));
 
         //summary
-        driver.findElement (By.id ("summary")).click ( );
-        driver.findElement (By.id ("summary")).sendKeys ("Task summary");
+        driver.findElement (issuePage.summaryField ( )).click ( );
+        driver.findElement (issuePage.summaryField ( )).sendKeys (issueSummary);
 
         //input description
-        driver.findElement (By.id ("description")).click ( );
-        driver.findElement (By.id ("description")).sendKeys ("Task descr");
+        driver.findElement (issuePage.descriptionField ( )).click ( );
+        driver.findElement (issuePage.descriptionField ( )).sendKeys (issueDescription);
 
         //create issue
-        driver.findElement (By.id ("create-issue-submit")).click ( );
+        driver.findElement (issuePage.submitIssueButton ( )).click ( );
 
-        Assert.assertTrue (driver.findElements (By.id ("logo")).size ( ) != 0);
+        Assert.assertTrue (driver.findElements (mainPage.logoButton ( )).size ( ) != 0);
 
     }
 

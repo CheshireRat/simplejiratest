@@ -35,4 +35,41 @@ public class MainPage {
     By logoButton() {
         return (logoButton);
     }
+
+    void dropdownMenuClick(){
+        driver.findElement(dropdownMenu()).click();
+    }
+    void logoutClick(){
+        driver.findElement(logout()).click();
+    }
+
+    void dashboardClick(){
+        driver.findElement(dashboard()).click();
+    }
+
+    void createIssueButtonClick(){
+        driver.findElement(createIssueButton()).click();
+    }
+    void navigate(String url) {
+        driver.navigate( ).to(url);
+    }
+
+    int logoButtonSize(){
+
+        return driver.findElements(logoButton()).size();
+    }
+    int createIssueButtonSize(){
+
+        return driver.findElements(createIssueButton()).size();
+    }
+
+    int dashboardSize(){
+
+        return driver.findElements(dashboard()).size();
+    }
+
+
+
+
+
 }

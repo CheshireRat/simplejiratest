@@ -1,7 +1,11 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class IssuePage {
     WebDriver driver;
@@ -81,4 +85,70 @@ public class IssuePage {
     By issueStatusInProgress() {
         return (issueStatusInProgress);
     }
+
+
+    void issueTypeFieldInput(String issueType) {
+        driver.findElement(issueTypeField()).sendKeys(issueType);
+        driver.findElement(issueTypeField()).sendKeys(Keys.ENTER);
+    }
+
+    void summaryFieldInput(String issueSummary) {
+        driver.findElement(summaryField()).click();
+        driver.findElement(summaryField()).sendKeys(issueSummary);
+    }
+
+    void descriptionFieldInput(String issueDescription) {
+        driver.findElement(summaryField()).click();
+        driver.findElement(summaryField()).sendKeys(issueDescription);
+    }
+
+    void submitIssueButtonClick() {
+        driver.findElement(submitIssueButton()).click();
+    }
+
+    void labelsEditButtonClick() {
+        driver.findElement(labelsEditButton()).click();
+    }
+
+    void removeLabelsButtonClick(String labelName) {
+        driver.findElement(removeLabelsButton(labelName)).click();
+    }
+
+    void enterButtonPress() {
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch(AWTException e) {
+            e.printStackTrace();
+        }
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+    }
+
+    void labelsTextInput(String labelName) {
+        driver.findElement(labelsTextInput()).sendKeys(labelName);
+        driver.findElement(labelsTextInput()).submit();
+    }
+
+    void workflowDropdownClick() {
+        driver.findElement(workflowDropdown()).click();
+    }
+
+    void workflowDropdownInProgressClick() {
+        driver.findElement(workflowDropdownInProgress()).click();
+    }
+
+    void descriptionEditClick() {
+        driver.findElement(descriptionEdit()).click();
+    }
+
+    void descriptionClear() {
+        driver.findElement(description()).clear();
+    }
+
+    int emptyDescriptionSize() {
+        return driver.findElements(emptyDescription()).size();
+    }
+
+
 }

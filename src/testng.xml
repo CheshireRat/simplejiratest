@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parameterization Test Suite">
+    <listeners>
+        <listener class-name="utils.TestListeners"></listener>
+    </listeners>
+    <test name="login">
+        <parameter name="login" value="Nuzhin_Ivan"/>
+        <parameter name="password" value="test"/>
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="login"/>
+                    <include name="changeIssueStatus"/>
+
+                    <!-- <include name="login"/>                                                   -->
+                    <!-- <include name="createIssue"/>                                             -->
+                    <!-- <include name="removeLabel"/>                                             -->
+                    <!-- <include name="addLabelByText"/>                                          -->
+                    <!-- <include name="changeIssueStatus"/>                                       -->
+                    <!-- <include name="removeDescription"/>                                       -->
+
+                    <!-- <include name="logout"/>                                                  -->
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

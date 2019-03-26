@@ -1,7 +1,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Parameterization Test Suite">
+    <groups>
+        <dependencies>
+            <group name="sanitary" depends-on="smoke" />
+            <group name="regression" depends-on="sanitary" />
+        </dependencies>
+    </groups>
     <listeners>
-        <listener class-name="utils.TestListeners"></listener>
+        <listener class-name="utils.TestListeners"/>
     </listeners>
     <test name="login">
         <parameter name="login" value="Nuzhin_Ivan"/>
@@ -10,19 +16,84 @@
             <class name="pages.Tests">
                 <methods>
                     <include name="login"/>
-                    <include name="changeIssueStatus"/>
 
-                    <!-- <include name="login"/>                                                   -->
-                    <!-- <include name="createIssue"/>                                             -->
-                    <!-- <include name="removeLabel"/>                                             -->
-                    <!-- <include name="addLabelByText"/>                                          -->
-                    <!-- <include name="changeIssueStatus"/>                                       -->
-                    <!-- <include name="removeDescription"/>                                       -->
 
-                    <!-- <include name="logout"/>                                                  -->
 
                 </methods>
             </class>
         </classes>
     </test>
+    <test name="changeIssueStatus">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="changeIssueStatus"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="createIssue">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="createIssue"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="removeLabel">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="removeLabel"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="addLabelByText">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="addLabelByText"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="removeDescription">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="removeDescription"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="logout">
+        <classes>
+            <class name="pages.Tests">
+                <methods>
+                    <include name="logout"/>
+
+
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+
 </suite>

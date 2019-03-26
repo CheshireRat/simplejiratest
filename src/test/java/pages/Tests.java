@@ -1,12 +1,21 @@
 package pages;
 
-import io.qameta.allure.junit4.DisplayName;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.DriverManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Tests {
 
@@ -16,6 +25,7 @@ public class Tests {
     MainPage mainPage;
     WebDriverWait wait;
 
+    //
     @BeforeTest
     public void setUpLogin() {
         driver = DriverManager.getDriver();
@@ -33,8 +43,18 @@ public class Tests {
         wait.until(ExpectedConditions.presenceOfElementLocated(mainPage.createIssueButton()));
         Assert.assertTrue(mainPage.createIssueButtonSize() != 0); //Create button presented
         //Assert.assertTrue(driver.findElements(mainPage.createIssueButton()).size() != 0);
-
     }
+    @AfterMethod
+    public void takeScreenShotOnFailure(ITestResult result) throws IOException {
+        if(result.getStatus() == ITestResult.FAILURE) {
+            driver.manage().window().maximize();
+            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            String fileName = result.getMethod().getMethodName() + "_" + new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.jpg'").format(new Date());
+//TODO - String.format for fileName
+            FileHandler.copy(scrFile, new File("C:\\QA\\" + fileName));
+        }
+    }
+
 
     @BeforeTest
     public void setUpLogout() {
@@ -44,7 +64,6 @@ public class Tests {
     }
 
     @Test(groups = {"smoke"})
-    @DisplayName("Human-readable test name")
     public void logout() {
         mainPage.dropdownMenuClick();  //click to dropdown on logout
         mainPage.logoutClick();

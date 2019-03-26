@@ -23,7 +23,8 @@ public class Tests {
         mainPage = new MainPage(driver);
     }
 
-    @Test
+    @Test(groups = {"smoke"})
+
     public void login() {
         loginPage.navigate(PropertyReader.readValue("url"));
         loginPage.enterUserName(PropertyReader.readValue("login"));
@@ -42,7 +43,7 @@ public class Tests {
 
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     @DisplayName("Human-readable test name")
     public void logout() {
         mainPage.dropdownMenuClick();  //click to dropdown on logout
@@ -64,7 +65,7 @@ public class Tests {
 
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void createIssue() {
         //TODO - add supporting for all issue types(epic not supported now)
 
@@ -101,7 +102,7 @@ public class Tests {
     }
 
     //TODO - fix it
-    @Test
+    @Test(groups = {"regression"})
     public void removeLabel() {
         mainPage.navigate(baseUrl + issueID);
 
@@ -121,7 +122,7 @@ public class Tests {
         issuePage = new IssuePage(driver);
     }
 
-    @Test
+    @Test(groups = {"regression"})
     //add label "user" (labelName)
     public void addLabelByText() {
         mainPage.navigate(baseUrl + issueID);
@@ -144,7 +145,7 @@ public class Tests {
 
     }
 
-    @Test
+    @Test(groups = {"feature"})
     public void changeIssueStatus() {
         mainPage.navigate(baseUrl + issueID);
 
@@ -166,7 +167,7 @@ public class Tests {
 
     }
 
-    @Test
+    @Test(groups = {"feature"})
     public void removeDescription() {
         mainPage.navigate(baseUrl + issueID);
         wait.until(ExpectedConditions.presenceOfElementLocated(issuePage.descriptionEdit()));

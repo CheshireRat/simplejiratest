@@ -1,8 +1,11 @@
 package pages;
 
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 
 public class Tests {
@@ -24,6 +28,7 @@ public class Tests {
     IssuePage issuePage;
     MainPage mainPage;
     WebDriverWait wait;
+    Set <Cookie> allCookies;
 
     //
     @BeforeTest
@@ -42,7 +47,7 @@ public class Tests {
         loginPage.loginClick();
         wait.until(ExpectedConditions.presenceOfElementLocated(mainPage.createIssueButton()));
         Assert.assertTrue(mainPage.createIssueButtonSize() != 0); //Create button presented
-        //Assert.assertTrue(driver.findElements(mainPage.createIssueButton()).size() != 0);
+        allCookies = driver.manage().getCookies();
     }
     @AfterMethod
     public void takeScreenShotOnFailure(ITestResult result) throws IOException {
@@ -52,19 +57,24 @@ public class Tests {
             String fileName = result.getMethod().getMethodName() + "_" + new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.jpg'").format(new Date());
 //TODO - String.format for fileName
             FileHandler.copy(scrFile, new File("C:\\QA\\" + fileName));
+            //TODO - add correct scr folder handle to properties
         }
-    }
 
+    }
 
     @BeforeTest
     public void setUpLogout() {
         driver = DriverManager.getDriver();
         loginPage = new LoginPage(driver);
-
+        //TODO - move cookie to method, probably DriverManager
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
     }
 
     @Test(groups = {"smoke"})
     public void logout() {
+        loginPage.navigate(PropertyReader.readValue("url"));
         mainPage.dropdownMenuClick();  //click to dropdown on logout
         mainPage.logoutClick();
         mainPage.dashboardClick();
@@ -81,6 +91,9 @@ public class Tests {
     public void setUpCreateIssue() {
         driver = DriverManager.getDriver();
         loginPage = new LoginPage(driver);
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
 
     }
 
@@ -118,14 +131,18 @@ public class Tests {
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
         wait = DriverManager.waiting();
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
     }
 
     //TODO - fix it
     @Test(groups = {"regression"})
     public void removeLabel() {
         mainPage.navigate(baseUrl + issueID);
-
-        issuePage.labelsEditButtonClick();
+//        Actions builder = new Actions(driver);
+//        Action mouseOverHome = builder.moveToElement(issuePage.labelsEditButton()).build();
+//        issuePage.labelsEditButtonClick();
 
 //TODO - check it, unstable
         wait.until(ExpectedConditions.presenceOfElementLocated(issuePage.removeLabelsButton(labelName)));
@@ -139,6 +156,9 @@ public class Tests {
         driver = DriverManager.getDriver();
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
     }
 
     @Test(groups = {"regression"})
@@ -161,7 +181,9 @@ public class Tests {
         driver = DriverManager.getDriver();
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
     }
 
     @Test(groups = {"feature"})
@@ -183,7 +205,9 @@ public class Tests {
     public void setUpAddRemoveDescription() {
         driver = DriverManager.getDriver();
         loginPage = new LoginPage(driver);
-
+        for(Cookie cookie : allCookies) {
+            driver.manage().addCookie(cookie);
+        }
     }
 
     @Test(groups = {"feature"})
@@ -196,4 +220,6 @@ public class Tests {
         wait.until(ExpectedConditions.presenceOfElementLocated(issuePage.emptyDescription()));
         Assert.assertTrue(issuePage.emptyDescriptionSize() != 0);
     }
+
+    //TODO - add test with Drag and Drop - https://pastebin.com/dYzkzEf6
 }

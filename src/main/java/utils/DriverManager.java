@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 public class DriverManager {
     private static WebDriver driver = null;
-    private static WebDriverWait wait = null;
 
     public static void initDriver() {
         System.setProperty("webdriver.chrome.driver", PropertyReader.readValue("chromedriverPath"));

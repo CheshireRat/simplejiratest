@@ -16,6 +16,7 @@
             <class name="pages.Tests">
                 <methods>
                     <include name="login"/>
+                    <include name="logout"/>
                 </methods>
             </class>
         </classes>

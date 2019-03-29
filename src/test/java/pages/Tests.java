@@ -48,7 +48,7 @@ public class Tests {
         mainPage = new MainPage(driver);
     }
 
-    @Test(groups = {"smoke"})
+    @Test(groups = "login")
     public void login() {
 
         loginPage.navigate(PropertyReader.readValue("url"));
@@ -84,7 +84,7 @@ public class Tests {
         }
     }
 
-    @Test(groups = {"smoke"})
+    @Test(groups = {"smoke"}, dependsOnGroups = {"login"})
     public void logout() {
         loginPage.navigate(PropertyReader.readValue("url"));
         mainPage.dropdownMenuClick();  //click to dropdown on logout

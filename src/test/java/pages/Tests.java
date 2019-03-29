@@ -4,8 +4,6 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,17 +28,17 @@ public class Tests {
     WebDriverWait wait;
     Set <Cookie> allCookies;
 
-    //
+
+    @Parameters("browser")
     @BeforeTest
-    public void setUpLogin() {
-        driver = DriverManager.getDriver();
+    public void setUpLogin(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         mainPage = new MainPage(driver);
     }
-
     @Test(groups = {"smoke"})
-
     public void login() {
+
         loginPage.navigate(PropertyReader.readValue("url"));
         loginPage.enterUserName(PropertyReader.readValue("login"));
         loginPage.enterUserPassword(PropertyReader.readValue("password"));
@@ -61,10 +59,10 @@ public class Tests {
         }
 
     }
-
+    @Parameters("browser")
     @BeforeTest
-    public void setUpLogout() {
-        driver = DriverManager.getDriver();
+    public void setUpLogout(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         //TODO - move cookie to method, probably DriverManager
         for(Cookie cookie : allCookies) {
@@ -87,9 +85,10 @@ public class Tests {
     String issueDescription = "Task descr";
     //TODO - move issuetype, summary, desc to method parameters
 
+    @Parameters("browser")
     @BeforeTest
-    public void setUpCreateIssue() {
-        driver = DriverManager.getDriver();
+    public void setUpCreateIssue(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         for(Cookie cookie : allCookies) {
             driver.manage().addCookie(cookie);
@@ -125,9 +124,10 @@ public class Tests {
 
     String labelName = "user";
 
+    @Parameters("browser")
     @BeforeTest
-    public void setUpRemoveLabel() {
-        driver = DriverManager.getDriver();
+    public void setUpRemoveLabel(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
         wait = DriverManager.waiting();
@@ -151,14 +151,13 @@ public class Tests {
         issuePage.enterButtonPress();
     }
 
+    @Parameters("browser")
     @BeforeTest
-    public void setUpAddLabelByText() {
-        driver = DriverManager.getDriver();
+    public void setUpAddLabelByText(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
+        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"regression"})
@@ -176,14 +175,13 @@ public class Tests {
         // Assert.assertTrue(driver.findElements(issuePage.labelByName(labelName)) != null);
     }
 
+    @Parameters("browser")
     @BeforeTest
-    public void setUpChangeIssueStatus() {
-        driver = DriverManager.getDriver();
+    public void setUpChangeIssueStatus(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
+        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"feature"})
@@ -201,13 +199,12 @@ public class Tests {
     String baseUrl = "http://jira.hillel.it:8080/browse/";
 //TODO move to params
 
+    @Parameters("browser")
     @BeforeTest
-    public void setUpAddRemoveDescription() {
-        driver = DriverManager.getDriver();
+    public void setUpAddRemoveDescription(String browser) {
+        driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
+        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"feature"})

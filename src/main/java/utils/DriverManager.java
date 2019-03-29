@@ -13,16 +13,23 @@ public class DriverManager {
     public static void initDriver() {
         System.setProperty("webdriver.chrome.driver", PropertyReader.readValue("chromedriverPath"));
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(3,TimeUnit.SECONDS); //TODO - ask google how to do it correctly
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); //TODO - ask google how to do it correctly
     }
-    public static WebDriver getDriver() {
-       return driver ;
+
+    public static WebDriver getDriver(String browser) {
+
+        if(browser.equalsIgnoreCase("chrome")) {
+            return driver;
+        } else if(browser.equalsIgnoreCase("firefox")) {
+            return driver; //TODO - add firefox support
+        } else
+            return driver; //TODO - handle error
     }
 
     public static WebDriverWait waiting() {
         WebDriverWait wait = new WebDriverWait(driver, 20);
 
-        return wait ;
+        return wait;
 
     }
 

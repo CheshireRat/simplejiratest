@@ -10,8 +10,8 @@
         <listener class-name="utils.TestListeners"></listener>
     </listeners>
     <test name="login">
-        <parameter name="login" value="Nuzhin_Ivan"/>
-        <parameter name="password" value="test"/>
+        <parameter name="browser" value="chrome"/>
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="pages.Tests">
                 <methods>

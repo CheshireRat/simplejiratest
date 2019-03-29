@@ -26,8 +26,19 @@ public class Tests {
     IssuePage issuePage;
     MainPage mainPage;
     WebDriverWait wait;
-    Set <Cookie> allCookies;
+    Set<Cookie> allCookies;
 
+    @DataProvider(name = "IssueSummaryDescription")
+
+    public static Object[][] summaryDescription() {
+
+        return new Object[][]{{"test summary", "test description"},
+                {"", ""},
+                {"1234567890", "1234567890"},
+                {"'!@#$%^&*()†", "'!@#$%^&*()†"}
+        };
+
+    }
 
     @Parameters("browser")
     @BeforeTest
@@ -36,6 +47,7 @@ public class Tests {
         loginPage = new LoginPage(driver);
         mainPage = new MainPage(driver);
     }
+
     @Test(groups = {"smoke"})
     public void login() {
 
@@ -47,6 +59,7 @@ public class Tests {
         Assert.assertTrue(mainPage.createIssueButtonSize() != 0); //Create button presented
         allCookies = driver.manage().getCookies();
     }
+
     @AfterMethod
     public void takeScreenShotOnFailure(ITestResult result) throws IOException {
         if(result.getStatus() == ITestResult.FAILURE) {
@@ -59,6 +72,7 @@ public class Tests {
         }
 
     }
+
     @Parameters("browser")
     @BeforeTest
     public void setUpLogout(String browser) {
@@ -80,12 +94,10 @@ public class Tests {
         Assert.assertTrue(mainPage.dashboardSize() != 0); //Log In button presented
     }
 
-    String issueType = "Task";
-    String issueSummary = "Task summary";
-    String issueDescription = "Task descr";
-    //TODO - move issuetype, summary, desc to method parameters
+    String issueType = "task";
 
-    @Parameters("browser")
+    @Parameters({"browser"})
+    //, "issueType", "issueSummary", "issueDescription"
     @BeforeTest
     public void setUpCreateIssue(String browser) {
         driver = DriverManager.getDriver(browser);
@@ -96,8 +108,8 @@ public class Tests {
 
     }
 
-    @Test(groups = {"smoke"})
-    public void createIssue() {
+    @Test(groups = {"smoke"}, dataProvider = "IssueSummaryDescription")
+    public void createIssue(String issueSummary, String issueDescription) {
         //TODO - add supporting for all issue types(epic not supported now)
 
         mainPage.createIssueButtonClick();

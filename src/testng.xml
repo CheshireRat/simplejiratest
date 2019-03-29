@@ -12,6 +12,9 @@
     <test name="login">
         <parameter name="browser" value="chrome"/>
         <parameter name="browser" value="firefox"/>
+        <parameter name="issueType" value="task"/>
+        <parameter name="issueSummary" value="test issue summary"/>
+        <parameter name="issueDescription" value="test issue description"/>
         <classes>
             <class name="pages.Tests">
                 <methods>

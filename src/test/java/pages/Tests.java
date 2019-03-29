@@ -33,7 +33,7 @@ public class Tests {
     public static Object[][] summaryDescription() {
 
         return new Object[][]{{"test summary", "test description"},
-                {"", ""},
+                {" ", " "},
                 {"1234567890", "1234567890"},
                 {"'!@#$%^&*()†", "'!@#$%^&*()†"}
         };

@@ -44,7 +44,7 @@ public class MainPage {
     }
 
     void dashboardClick(){
-        driver.findElement(dashboard()).click();
+        driver.findElement(dashboard).click();
     }
 
     void createIssueButtonClick(){
@@ -65,7 +65,7 @@ public class MainPage {
 
     int dashboardSize(){
 
-        return driver.findElements(dashboard()).size();
+        return driver.findElements(dashboard).size();
     }
 
 

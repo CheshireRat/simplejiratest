@@ -26,11 +26,11 @@ public class DriverManager {
             return driver; //TODO - handle error
     }
 
-    public static WebDriverWait waiting() {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
-
-        return wait;
-
-    }
+//    public static WebDriverWait waiting() {
+//        WebDriverWait wait = new WebDriverWait(driver, 20);
+//
+//        return wait;
+//
+//    }
 
 }

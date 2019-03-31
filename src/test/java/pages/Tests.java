@@ -1,9 +1,13 @@
 package pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,6 +23,7 @@ import java.util.Date;
 import java.util.Set;
 
 
+
 public class Tests {
 
     WebDriver driver;
@@ -27,6 +32,7 @@ public class Tests {
     MainPage mainPage;
     WebDriverWait wait;
     Set<Cookie> allCookies;
+    private static final Logger LOGGER = LogManager.getLogger(Tests.class.getName());
 
     @DataProvider(name = "IssueSummaryDescription")
 
@@ -46,18 +52,25 @@ public class Tests {
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         mainPage = new MainPage(driver);
+        wait =   new WebDriverWait(driver, 20);
+
+
     }
 
     @Test(groups = "login")
     public void login() {
-
+        LOGGER.info("Test  started - 'login'");
         loginPage.navigate(PropertyReader.readValue("url"));
         loginPage.enterUserName(PropertyReader.readValue("login"));
         loginPage.enterUserPassword(PropertyReader.readValue("password"));
         loginPage.loginClick();
+        LOGGER.debug("loginClick() - 'login'");
         wait.until(ExpectedConditions.presenceOfElementLocated(mainPage.createIssueButton()));
-        Assert.assertTrue(mainPage.createIssueButtonSize() != 0); //Create button presented
+        Assert.assertTrue(driver.findElements(mainPage.createIssueButton()).size() != 0); //Create button presented
+        LOGGER.info("Assert passed  - 'login'");
         allCookies = driver.manage().getCookies();
+        LOGGER.info("Test  finished - 'login'");
+
     }
 
     @AfterMethod
@@ -76,16 +89,17 @@ public class Tests {
     @Parameters("browser")
     @BeforeTest
     public void setUpLogout(String browser) {
+        wait =   new WebDriverWait(driver, 20);
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         //TODO - move cookie to method, probably DriverManager
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
+
     }
 
     @Test(groups = {"smoke"}, dependsOnGroups = {"login"})
     public void logout() {
+        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
+
         loginPage.navigate(PropertyReader.readValue("url"));
         mainPage.dropdownMenuClick();  //click to dropdown on logout
         mainPage.logoutClick();
@@ -102,9 +116,8 @@ public class Tests {
     public void setUpCreateIssue(String browser) {
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
+        wait =   new WebDriverWait(driver, 20);
+//        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
 
     }
 
@@ -131,37 +144,38 @@ public class Tests {
         issuePage.submitIssueButtonClick();
 
         Assert.assertTrue(mainPage.logoButtonSize() != 0);
-//Assert.assertTrue(driver.findElements(mainPage.logoButton()).size() != 0);
+Assert.assertTrue(driver.findElements(mainPage.logoButton()).size() != 0);
     }
 
     String labelName = "user";
 
-    @Parameters("browser")
-    @BeforeTest
-    public void setUpRemoveLabel(String browser) {
-        driver = DriverManager.getDriver(browser);
-        loginPage = new LoginPage(driver);
-        issuePage = new IssuePage(driver);
-        wait = DriverManager.waiting();
-        for(Cookie cookie : allCookies) {
-            driver.manage().addCookie(cookie);
-        }
-    }
+/*
+@Parameters("browser")
+@BeforeTest
+public void setUpRemoveLabel(String browser) {
+driver = DriverManager.getDriver(browser);
+loginPage = new LoginPage(driver);
+issuePage = new IssuePage(driver);
+wait = DriverManager.waiting();
+for(Cookie cookie : allCookies) {
+driver.manage().addCookie(cookie);
+}
+}
 
-    //TODO - fix it
-    @Test(groups = {"regression"})
-    public void removeLabel() {
-        mainPage.navigate(baseUrl + issueID);
-//        Actions builder = new Actions(driver);
-//        Action mouseOverHome = builder.moveToElement(issuePage.labelsEditButton()).build();
-//        issuePage.labelsEditButtonClick();
+//TODO - fix it
+@Test(groups = {"regression"})
+public void removeLabel() {
+mainPage.navigate(baseUrl + issueID);
+Actions builder = new Actions(driver);
+Action mouseOverHome = builder.moveToElement(issuePage.labelsEditButton()).build();
+issuePage.labelsEditButtonClick();
+TODO - check it, unstable
+wait.until(ExpectedConditions.presenceOfElementLocated(issuePage.removeLabelsButton(labelName)));
+issuePage.removeLabelsButtonClick(labelName);
 
-//TODO - check it, unstable
-        wait.until(ExpectedConditions.presenceOfElementLocated(issuePage.removeLabelsButton(labelName)));
-        issuePage.removeLabelsButtonClick(labelName);
-
-        issuePage.enterButtonPress();
-    }
+issuePage.enterButtonPress();
+}
+*/
 
     @Parameters("browser")
     @BeforeTest
@@ -169,7 +183,8 @@ public class Tests {
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
+        wait =   new WebDriverWait(driver, 20);
+//        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"regression"})
@@ -193,7 +208,8 @@ public class Tests {
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
+        wait =   new WebDriverWait(driver, 20);
+//        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"feature"})
@@ -216,7 +232,8 @@ public class Tests {
     public void setUpAddRemoveDescription(String browser) {
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
-        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
+        wait =   new WebDriverWait(driver, 20);
+//        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 
     @Test(groups = {"feature"})

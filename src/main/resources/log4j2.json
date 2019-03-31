@@ -4,8 +4,8 @@
     "appenders": {
       "RollingFile": {
         "name":"File",
-        "fileName":"C:/logs/howtodoinjava.log",
-        "filePattern":"C:/logs/howtodoinjava-backup-%d{MM-dd-yy-HH-mm-ss}-%i.log.gz",
+        "fileName":"C:\\QA\\logs\\tests.log",
+        "filePattern":"C:\\QA\\logs\\tests-backup-%d{MM-dd-yy-HH-mm-ss}-%i.log.gz",
         "PatternLayout": {
           "pattern":"%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"
         },

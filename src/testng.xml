@@ -13,7 +13,8 @@
     </listeners>
     <test name="login">
         <parameter name="browser" value="chrome"/>
-        <parameter name="browser" value="firefox"/>
+        <!--<parameter name="browser" value="firefox"/>-->
+        <!--TODO - only 1 param browser-->
         <parameter name="issueType" value="task"/>
         <parameter name="issueSummary" value="test issue summary"/>
         <parameter name="issueDescription" value="test issue description"/>

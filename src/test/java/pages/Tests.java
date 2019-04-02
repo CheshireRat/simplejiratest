@@ -9,12 +9,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.DriverManager;
+import utils.EventListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,7 @@ public class Tests {
     MainPage mainPage;
     WebDriverWait wait;
     Set<Cookie> allCookies;
+
     private static final Logger LOGGER = LogManager.getLogger(Tests.class.getName());
 
     @DataProvider(name = "IssueSummaryDescription")
@@ -60,6 +63,7 @@ public class Tests {
     @Test(groups = "login")
     public void login() {
         LOGGER.info("Test  started - 'login'");
+
         loginPage.navigate(PropertyReader.readValue("url"));
         loginPage.enterUserName(PropertyReader.readValue("login"));
         loginPage.enterUserPassword(PropertyReader.readValue("password"));
@@ -208,7 +212,7 @@ issuePage.enterButtonPress();
         driver = DriverManager.getDriver(browser);
         loginPage = new LoginPage(driver);
         issuePage = new IssuePage(driver);
-        wait =   new WebDriverWait(driver, 20);
+//        wait =   new WebDriverWait(driver, 20);
 //        for(Cookie cookie : allCookies) driver.manage().addCookie(cookie);
     }
 

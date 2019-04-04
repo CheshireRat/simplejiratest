@@ -35,17 +35,18 @@ public class EventListener implements WebDriverEventListener {
     }
 
     public void beforeNavigateTo(String s, WebDriver webDriver) {
-        System.out.println("beforeNavigateTo || " + webDriver.getCurrentUrl() );
+
+        //System.out.println("beforeNavigateTo || " + webDriver.getCurrentUrl() );
 
     }
 
     public void afterNavigateTo(String s, WebDriver webDriver) {
-        System.out.println("afterNavigateTo || " + webDriver.getCurrentUrl() );
+       // System.out.println("afterNavigateTo || " + webDriver.getCurrentUrl() );
 
     }
 
     public void beforeNavigateBack(WebDriver webDriver) {
-        System.out.println("beforeNavigateBack || " + webDriver.getCurrentUrl() );
+        //System.out.println("beforeNavigateBack || " + webDriver.getCurrentUrl() );
 
 
     }
@@ -71,22 +72,22 @@ public class EventListener implements WebDriverEventListener {
     }
 
     public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        System.out.println("beforeFindBy ||  " + by + " || " + webElement);
+        //System.out.println("beforeFindBy ||  " + by + " || " + webElement);
 
     }
 
     public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        System.out.println("afterFindBy ||  " + by );
+        //System.out.println("afterFindBy ||  " + by );
 
     }
 
     public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-        System.out.println("beforeClickOn ||  "  + webElement );
+        //System.out.println("beforeClickOn ||  "  + webElement );
 
     }
 
     public void afterClickOn(WebElement webElement, WebDriver webDriver) {
-        System.out.println("afterClickOn ||  "  + webElement );
+        //System.out.println("afterClickOn ||  "  + webElement );
 
     }
 
@@ -115,7 +116,7 @@ public class EventListener implements WebDriverEventListener {
     }
 
     public void onException(Throwable throwable, WebDriver webDriver) {
-        System.out.println("onException || " + webDriver.getPageSource());
+        //System.out.println("onException || " + webDriver.getPageSource());
 
     }
 
@@ -128,11 +129,12 @@ public class EventListener implements WebDriverEventListener {
     }
 
     public void beforeGetText(WebElement webElement, WebDriver webDriver) {
-        System.out.println("beforeGetText");
+
+        //System.out.println("beforeGetText");
     }
 
     public void afterGetText(WebElement webElement, WebDriver webDriver, String s) {
-        System.out.println("afterGetText");
+        //System.out.println("afterGetText");
 
     }
 }

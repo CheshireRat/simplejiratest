@@ -1,29 +1,37 @@
 package utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 public class TestListeners implements ITestListener{
+    private static final Logger LOGGER = LogManager.getLogger(TestListeners.class.getName());
 
     public void onTestStart(ITestResult iTestResult) {
-        System.out.println("onTestStart " + iTestResult);
+        LOGGER.info("onTestStart" + iTestResult);
+
     }
 
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.println("onTestSuccess "+ iTestResult);
+        LOGGER.info("onTestSuccess"  + iTestResult );
+
     }
 
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.println("onTestFailure "+ iTestResult);
+        LOGGER.info("onTestFailure"  + iTestResult);
+
     }
 
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.println("onTestSkipped "+ iTestResult);
+        LOGGER.info("onTestSkipped"  + iTestResult);
+
+
     }
 
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        System.out.println("onTestFailedButWithinSuccessPercentage "+ iTestResult);
+
     }
 
     public void onStart(ITestContext iTestContext) {
@@ -31,7 +39,8 @@ public class TestListeners implements ITestListener{
     }
 
     public void onFinish(ITestContext iTestContext) {
-        System.out.println("onFinish "+ iTestContext);
+        LOGGER.info("onFinish"  + iTestContext);
+
     }
 
 

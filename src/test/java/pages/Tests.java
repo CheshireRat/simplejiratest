@@ -62,18 +62,18 @@ public class Tests {
 
     @Test(groups = "login")
     public void login() {
-        LOGGER.info("Test  started - 'login'");
+        //LOGGER.info("Test  started - 'login'");
 
         loginPage.navigate(PropertyReader.readValue("url"));
         loginPage.enterUserName(PropertyReader.readValue("login"));
         loginPage.enterUserPassword(PropertyReader.readValue("password"));
         loginPage.loginClick();
-        LOGGER.debug("loginClick() - 'login'");
+        //LOGGER.debug("loginClick() - 'login'");
         wait.until(ExpectedConditions.presenceOfElementLocated(mainPage.createIssueButton()));
         Assert.assertTrue(driver.findElements(mainPage.createIssueButton()).size() != 0); //Create button presented
-        LOGGER.info("Assert passed  - 'login'");
+       // LOGGER.info("Assert passed  - 'login'");
         allCookies = driver.manage().getCookies();
-        LOGGER.info("Test  finished - 'login'");
+        //LOGGER.info("Test  finished - 'login'");
 
     }
 

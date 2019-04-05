@@ -19,85 +19,19 @@
         <parameter name="issueSummary" value="test issue summary"/>
         <parameter name="issueDescription" value="test issue description"/>
         <classes>
-            <class name="pages.Tests">
+            <!--<class name="pages.Tests">-->
+                <!--<methods>-->
+                    <!--<include name="login"/>-->
+                    <!--<include name="logout"/>-->
+                <!--</methods>-->
+            <!--</class>-->
+            <class name="pages.ChromeExpansionsManagement">
                 <methods>
-                    <include name="login"/>
-                    <include name="logout"/>
+                    <include name="installExt"/>
                 </methods>
             </class>
         </classes>
     </test>
-    <!--<test name="changeIssueStatus">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="changeIssueStatus"/>-->
 
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="createIssue">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="createIssue"/>-->
-
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="removeLabel">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="removeLabel"/>-->
-
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="addLabelByText">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="addLabelByText"/>-->
-
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="removeDescription">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="removeDescription"/>-->
-
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-    <!--<test name="logout">-->
-        <!--<classes>-->
-            <!--<class name="pages.Tests">-->
-                <!--<methods>-->
-                    <!--<include name="logout"/>-->
-
-
-
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
 
 </suite>

@@ -32,6 +32,7 @@ public class LoginPage {
     void enterUserPassword(String password) {
         driver.findElement(this.password).click( ); //click to close 'not secure connection msg'
         driver.findElement(this.password).sendKeys(password); //input password
+
     }
 
     void loginClick() {

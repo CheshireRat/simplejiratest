@@ -35,6 +35,7 @@ public class Tests {
     WebDriverWait wait;
     Set<Cookie> allCookies;
 
+    //all LOGGER user in login test
     private static final Logger LOGGER = LogManager.getLogger(Tests.class.getName());
 
     @DataProvider(name = "IssueSummaryDescription")

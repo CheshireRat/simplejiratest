@@ -3,23 +3,18 @@ package pages;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class APITests {
 
 
 
-//    @Test
-//    public void login() {
-//        given()
-//                .header("X-Atlassian-Token", "nocheck")
-//                .get("http://jira.hillel.it:8080/rest/api/2/issue/createmeta")
-//                .then()
-//                .statusCode(200)
-//                .log()
-//                .all();
-//
-//    }
+    @Test
+    public void login() {
+
+    }
 
     @Test
     public void loginWrongPassword() {
@@ -34,13 +29,22 @@ public class APITests {
     @Test
     public void createIssue() {
 
+        String issueID = "";
+
+            deleteIssue( issueID);
+
     }
 
-String issueID = "QAAUT7-732"; //this is already deleted
+
+
+
+
+
+//String issueID = "QAAUT7-732"; //this is already deleted
     @Test
-    public void deleteIssue() {
+    public void deleteIssue(String issueID ) {
         Response response = RestAssured.given()
-                .auth().preemptive().basic("Nuzhin_Ivan", "test")
+                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
                 .header("Content-Type", "application/json")
                 .delete(String.format("http://jira.hillel.it:8080/rest/api/2/issue/", issueID));
                 //.delete("http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-731");
@@ -65,6 +69,11 @@ String issueID = "QAAUT7-732"; //this is already deleted
     }
 
     @Test
+    public void deleteComment() {
+
+    }
+
+    @Test
     public void JQLSearchIssue() {
 
     }
@@ -83,4 +92,7 @@ String issueID = "QAAUT7-732"; //this is already deleted
     public void getGroups() {
 
     }
+
+
+
 }

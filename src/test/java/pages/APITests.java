@@ -3,14 +3,10 @@ package pages;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class APITests {
-
-
-
+    
     @Test
     public void login() {
 
@@ -31,16 +27,17 @@ public class APITests {
 
         String issueID = "";
 
+
             deleteIssue( issueID);
+
+            //curl -D- -u Nuzhin_Ivan:test -X POST --data '{"fields":{"project":{"key": "QAAUT7"},"summary": "Summary test","description": "descr","issuetype": {"name": "Bug"}}}' -H "Content-Type: application/json"  http://jira.hillel.it:8080/rest/api/2/issue/
+
+        //response
+        //{"id":"48710","key":"QAAUT7-732","self":"http://jira.hillel.it:8080/rest/api/2/issue/48710"}
 
     }
 
-
-
-
-
-
-//String issueID = "QAAUT7-732"; //this is already deleted
+    //String issueID = "QAAUT7-732"; //this is already deleted
     @Test
     public void deleteIssue(String issueID ) {
         Response response = RestAssured.given()
@@ -49,23 +46,24 @@ public class APITests {
                 .delete(String.format("http://jira.hillel.it:8080/rest/api/2/issue/", issueID));
                 //.delete("http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-731");
 
-        System.out.println(response.statusCode());
-        System.out.println(response.statusLine());
+//        System.out.println(response.statusCode());
+//        System.out.println(response.statusLine());
 
         Assert.assertTrue(response.statusCode() == 204);
-
         //curl -X DELETE -u Nuzhin_Ivan:test --header 'Accept: application/json' --url 'http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-729'
     }
 
-
     @Test
     public void updateIssue() {
-
+        //update assignee
+        //curl -D- -u Nuzhin_Ivan:test -X PUT --data '{ "fields": { "assignee":{"name":"Nuzhin_Ivan"} }}' -H "Content-Type: application/json" http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732
     }
 
     @Test
     public void addComment() {
 
+
+        //curl -D- -u Nuzhin_Ivan:test -X PUT -d '{"update": {"comment": [{"add": {"body": "Comment test"}}]}}' -H "Content-Type: application/json" http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732
     }
 
     @Test
@@ -92,7 +90,5 @@ public class APITests {
     public void getGroups() {
 
     }
-
-
 
 }

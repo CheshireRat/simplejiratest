@@ -74,16 +74,24 @@ public class APITests {
     @Test
     public void JQLSearchIssue() {
 
+        //TODO - check request
+        //curl -D- -u $usernameData:$passwordData -X GET -H "Content-Type: application/json" "http://jira.alm.mentorg.com:8080/rest/api/2/search?jql=project=HDS&maxResults=1000&fields=summary"
     }
 
     @Test
     public void getUser() {
+
+        //curl  -u Nuzhin_Ivan:test   --header 'Accept: application/json'   --url 'http://jira.hillel.it:8080/rest/api/2/user?username=Nuzhin_Ivan&expand=groups,applicationRoles'
+
+        //{"self":"http://jira.hillel.it:8080/rest/api/2/user?username=Nuzhin_Ivan","key":"nuzhin_ivan","name":"Nuzhin_Ivan","emailAddress":"nuzhin.ivan@gmail.com","avatarUrls":{"48x48":"https://www.gravatar.com/avatar/ee6c1b396807230ced8e053aca5e87c2?d=mm&s=48","24x24":"https://www.gravatar.com/avatar/ee6c1b396807230ced8e053aca5e87c2?d=mm&s=24","16x16":"https://www.gravatar.com/avatar/ee6c1b396807230ced8e053aca5e87c2?d=mm&s=16","32x32":"https://www.gravatar.com/avatar/ee6c1b396807230ced8e053aca5e87c2?d=mm&s=32"},"displayName":"Nuzhin_Ivan","active":true,"timeZone":"Europe/Kiev","locale":"en_US","groups":{"size":2,"items":[{"name":"jira-software-users","self":"http://jira.hillel.it:8080/rest/api/2/group?groupname=jira-software-users"},{"name":"webinar","self":"http://jira.hillel.it:8080/rest/api/2/group?groupname=webinar"}]},"applicationRoles":{"size":1,"items":[{"key":"jira-software","name":"JIRA Software"}]},"expand":"groups,applicationRoles"}
 
     }
 
     @Test
     public void getProject() {
 
+        //get ALL projects
+        //curl -u Nuzhin_Ivan:test   --header 'Accept: application/json'   --url 'http://jira.hillel.it:8080/rest/api/2/project'
     }
 
     @Test

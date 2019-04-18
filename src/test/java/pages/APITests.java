@@ -1,6 +1,5 @@
 package pages;
 
-
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import json.JsonBuilder;
@@ -8,42 +7,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.JiraAPIActions;
 
 import static io.restassured.RestAssured.given;
-
 
 public class APITests {
 
     JsonBuilder jsonBuilder ;
     String cookie;
     String issueID;
-    
+
     @Test
     public void login() {
-
-        String oldCookie = cookie;
-            Response response = given()
-                    //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                    .header("Content-Type", "application/json")
-                    .body("{ \"username\": \"Nuzhin_ivan\", \"password\": \"test\" }")
-                    .post("http://jira.hillel.it:8080/rest/auth/1/session");
-
-        JSONObject jObj = null;
-        try {
-            jObj = new JSONObject(response.asString());
-            cookie = jObj.getString("JSESSIONID");
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-//            System.out.println(response.prettyPrint());
-//         System.out.println(response.statusCode());
-//         System.out.println(response.statusLine());
-//        System.out.println("cookie");
-
+        //TODO - move login to base
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.login(
+                                (PropertyReader.readValue("login"))
+                               ,(PropertyReader.readValue("password")));
+        cookie = response.then().extract().path("session.value");
         Assert.assertTrue(response.statusCode() == 200);
-        Assert.assertFalse(cookie.equals(oldCookie));
-
     }
 
     @Test
@@ -59,7 +41,6 @@ public class APITests {
 
         Assert.assertTrue(response.prettyPrint().contains("Login failed"));
     }
-
 
     @Test
     public void loginWrongUserName() {
@@ -208,5 +189,11 @@ public class APITests {
     public void getGroups() {
 
     }
+
+    @Test
+    public void setPriority() {
+
+    }
+
 
 }

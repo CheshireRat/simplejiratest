@@ -48,4 +48,12 @@ public class HttpSender {
         return response;
     }
 
+    public Response put(String body,String uri, String issueID){
+        Response response = given()
+                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .header("Content-Type", "application/json")
+                .body(body)
+                .put(baseUrl + uri+  issueID);
+        return response;
+    }
 }

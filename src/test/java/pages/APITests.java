@@ -16,15 +16,15 @@ public class APITests {
 
     JsonBuilder jsonBuilder ;
     String cookie;
-    String issueID = "QAAUT7-742";
+    String issueID = "QAAUT7-742";  //have to be exists
 
     @Test
     public void login() {
         //TODO - move login to base
         JiraAPIActions jiraAPIActions = new JiraAPIActions();
         Response response = jiraAPIActions.login(
-                                (PropertyReader.readValue("login"))
-                               ,(PropertyReader.readValue("password")));
+                                PropertyReader.readValue("login")
+                               ,PropertyReader.readValue("password"));
         cookie = response.then().extract().path("session.value");
         Assert.assertTrue(response.statusCode() == 200);
     }
@@ -73,16 +73,14 @@ public class APITests {
 
     @Test
     public void updateIssue() {
-        jsonBuilder = new JsonBuilder();
-
-        RestAssured.baseURI  = "http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732";
-        Response response = given()
-                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .body(jsonBuilder.updateIssue())
-                .put();
+        //TODO - add more params to update
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.updateIssue(PropertyReader.readValue("login"),issueID);
+        Response responseClearUP = jiraAPIActions.updateIssue("",issueID);
+        System.out.println(responseClearUP.prettyPrint());
 
         Assert.assertTrue(response.statusCode() == 204);
+        Assert.assertTrue(responseClearUP.statusCode() == 204);
 
         //curl -D- -u Nuzhin_Ivan:test -X PUT --data '{ "fields": { "assignee":{"name":"Nuzhin_Ivan"} }}' -H "Content-Type: application/json" http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732
     }

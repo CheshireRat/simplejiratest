@@ -25,6 +25,10 @@ public class JiraAPIActions {
     public Response deleteIssue(String issueID){
         return httpSender.delete(ApiPATH.ISSUE, issueID);
     }
+    public Response updateIssue(String user, String issueID){
+        String updateIssueJSON = jsonBuilder.updateIssue(user);
+        return httpSender.put(updateIssueJSON, ApiPATH.ISSUE,issueID );
+    }
 
 
 }

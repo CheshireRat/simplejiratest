@@ -9,16 +9,18 @@ public class JsonBuilder {
 
 
 
-    public String updateIssue() {
-
-
-        JSONObject jsObj = new JSONObject();
+    public String updateIssue(String user) {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonFields = new JSONObject();
+        JSONObject jsonAssignee = new JSONObject();
         try {
-            jsObj = new JSONObject("{ \"fields\": { \"assignee\":{\"name\":\"Nuzhin_Ivan\"} }}");
-        } catch(JSONException e1) {
-            e1.printStackTrace();
+            jsonAssignee.put("name", user );
+            jsonFields.put("assignee",jsonAssignee );
+            jsonObject.put("fields", jsonFields);
+        } catch(JSONException e) {
+            e.printStackTrace();
         }
-        return jsObj.toString();
+        return jsonObject.toString();
     }
 
     public String loginJSON(String name, String password) {

@@ -40,14 +40,12 @@ public class HttpSender {
         return response;
     }
 
-    public Response delete(String body, String uri){
+    public Response delete(String uri, String issueID){
         Response response = given()
-                //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
                 .header("Content-Type", "application/json")
-                .body(body)
-                .post(baseUrl + uri);
+                .delete(baseUrl + uri + issueID);
         return response;
     }
-
 
 }

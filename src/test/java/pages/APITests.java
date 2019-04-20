@@ -16,7 +16,7 @@ public class APITests {
 
     JsonBuilder jsonBuilder ;
     String cookie;
-    String issueID;
+    String issueID = "QAAUT7-742";
 
     @Test
     public void login() {
@@ -65,21 +65,8 @@ public class APITests {
 
     @Test
     public void deleteIssue( ) {
-        StringBuilder builder = new StringBuilder();
-        String baseUrl = "http://jira.hillel.it:8080/rest/api/2/issue/";
-
-        Response response = given()
-                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .delete(builder
-                        .append(baseUrl)
-                        .append(issueID)
-                        .toString()
-                        );
-       // System.out.println(builder.append(baseUrl).append(issueID).toString());
-       // System.out.println(response.statusCode());
-       // System.out.println(response.statusLine());
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.deleteIssue(issueID);
         Assert.assertTrue(response.statusCode() == 204);
         //curl -X DELETE -u Nuzhin_Ivan:test --header 'Accept: application/json' --url 'http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-729'
     }

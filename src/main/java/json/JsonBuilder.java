@@ -35,15 +35,11 @@ public class JsonBuilder {
 
     //TODO - rebuild params as class
     public String createIssueJSON(String project, String summary, String description, String issueType) {
-
         //{"fields":{"project":{"key": "QAAUT7"},"summary": "Summary test","description": "descr","issuetype": {"name": "Bug"}}}
-
         JSONObject jsonObject = new JSONObject();
         JSONObject joFields = new JSONObject();
         JSONObject joProject = new JSONObject();
         JSONObject joIssueType = new JSONObject();
-
-
         try {
             joProject.put( "key",project);
             joIssueType.put( "name",issueType);
@@ -52,13 +48,9 @@ public class JsonBuilder {
             joFields.put("description", description);
             joFields.put("issuetype", joIssueType);
             jsonObject.put("fields",joFields);
-
         } catch(JSONException e) {
             e.printStackTrace();
         }
         return jsonObject.toString();
     }
-
-    //
-
 }

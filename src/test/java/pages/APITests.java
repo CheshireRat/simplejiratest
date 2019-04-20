@@ -9,6 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.JiraAPIActions;
 
+import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 
 public class APITests {
@@ -31,54 +32,34 @@ public class APITests {
     @Test
     public void loginWrongPassword() {
 
-        Response response = given()
-                //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .body("{ \"username\": \"Nuzhin_ivan\", \"password\": \"wrongpassword\" }")
-                .post("http://jira.hillel.it:8080/rest/auth/1/session");
-
-        //System.out.println(response.prettyPrint());
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.login(
+                (PropertyReader.readValue("login"))
+                ,"wrongpassword");
         Assert.assertTrue(response.prettyPrint().contains("Login failed"));
     }
 
     @Test
     public void loginWrongUserName() {
-        Response response = given()
-                //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .body("{ \"username\": \"wrongUserName\", \"password\": \"wrongpassword\" }")
-                .post("http://jira.hillel.it:8080/rest/auth/1/session");
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.login(
+                "wronglogin"
+                ,"wrongpassword");
         Assert.assertTrue(response.prettyPrint().contains("Login failed"));
     }
 
     @Test
     public void createIssue() {
-        //RestAssured.baseURI = "http://jira.hillel.it:8080/rest/api/2/issue/";
-        Response response = given()
-                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .body("{\"fields\":{\"project\":{\"key\": \"QAAUT7\"},\"summary\": \"Summary test\",\"description\": \"descr\",\"issuetype\": {\"name\": \"Bug\"}}}")
-                .post("http://jira.hillel.it:8080/rest/api/2/issue/");
-
-        JSONObject jObj = null;
-        try {
-            jObj = new JSONObject(response.asString());
-            issueID = jObj.getString("key");
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(response.statusCode());
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.createIssue(
+                "QAAUT7"
+                ,"Summary test"
+                ,"descr"
+                ,"Bug");
+        issueID = response.getBody().path("key");
         Assert.assertTrue(response.statusCode() == 201);
-
         //curl -D- -u Nuzhin_Ivan:test -X POST --data '{"fields":{"project":{"key": "QAAUT7"},"summary": "Summary test","description": "descr","issuetype": {"name": "Bug"}}}' -H "Content-Type: application/json"  http://jira.hillel.it:8080/rest/api/2/issue/
-
-        //response
         //{"id":"48710","key":"QAAUT7-732","self":"http://jira.hillel.it:8080/rest/api/2/issue/48710"}
-
         deleteIssue();
         }
 

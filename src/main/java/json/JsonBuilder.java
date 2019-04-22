@@ -9,7 +9,7 @@ public class JsonBuilder {
 
 
 
-    public String updateIssue(String user) {
+    public String updateIssueJSON(String user) {
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonFields = new JSONObject();
         JSONObject jsonAssignee = new JSONObject();
@@ -55,4 +55,25 @@ public class JsonBuilder {
         }
         return jsonObject.toString();
     }
+
+    public String addCommentJSON(String comment){
+        JSONObject joUpdate = new JSONObject();
+        JSONObject  joComment = new JSONObject ();
+        JSONArray arr = new JSONArray();
+        JSONObject joAdd = new JSONObject();
+        JSONObject joBody = new JSONObject();
+        try {
+            joBody.put("body", comment);
+            joAdd.put("add", joBody);
+            arr.put(joAdd);
+            joComment.put("comment", arr);
+            joUpdate.put("update",joComment);
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+        return joUpdate.toString();
+    }
+
+
+
 }

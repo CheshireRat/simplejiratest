@@ -26,6 +26,7 @@ public class APITests {
                                 PropertyReader.readValue("login")
                                ,PropertyReader.readValue("password"));
         cookie = response.then().extract().path("session.value");
+        System.out.println(response.prettyPrint());
         Assert.assertTrue(response.statusCode() == 200);
     }
 
@@ -87,13 +88,10 @@ public class APITests {
 
     @Test
     public void addComment() {
-        RestAssured.baseURI  = "http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732";
-        Response response = given()
-                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .body("{\"update\": {\"comment\": [{\"add\": {\"body\": \"Comment test\"}}]}}")
-                .put();
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.addComment("some text of comment", issueID);
+        //TODO add clearup
+        //System.out.println(response.prettyPrint());
         Assert.assertTrue(response.statusCode() == 204);
 
         //curl -D- -u Nuzhin_Ivan:test -X PUT -d '{"update": {"comment": [{"add": {"body": "Comment test"}}]}}' -H "Content-Type: application/json" http://jira.hillel.it:8080/rest/api/2/issue/QAAUT7-732

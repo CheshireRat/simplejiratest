@@ -1,6 +1,7 @@
 package utils;
 
 import io.restassured.RestAssured;
+import io.restassured.config.SSLConfig;
 import io.restassured.response.Response;
 import pages.PropertyReader;
 
@@ -16,6 +17,7 @@ public class HttpSender {
     public Response post(String body, String uri){
         Response response = given()
                 .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
                 .body(body)
                 .post(baseUrl + uri);
@@ -25,6 +27,7 @@ public class HttpSender {
     public Response postAuth(String body, String uri){
         Response response = given()
                 //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
                 .body(body)
                 .post(baseUrl + uri);
@@ -34,6 +37,7 @@ public class HttpSender {
     public Response get(String body, String uri){
         Response response = given()
                 //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
                 .body(body)
                 .post(baseUrl + uri);
@@ -43,6 +47,7 @@ public class HttpSender {
     public Response delete(String uri, String issueID){
         Response response = given()
                 .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
                 .delete(baseUrl + uri + issueID);
         return response;
@@ -51,6 +56,7 @@ public class HttpSender {
     public Response put(String body,String uri, String issueID){
         Response response = given()
                 .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
                 .body(body)
                 .put(baseUrl + uri+  issueID);

@@ -1,11 +1,7 @@
 package utils;
 
-import io.restassured.RestAssured;
-import io.restassured.config.SSLConfig;
 import io.restassured.response.Response;
 import pages.PropertyReader;
-
-import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
 public class HttpSender {
@@ -34,13 +30,12 @@ public class HttpSender {
         return response;
     }
 
-    public Response get(String body, String uri){
+    public Response get( String uri){
         Response response = given()
-                //.auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
+                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
                 .relaxedHTTPSValidation()
                 .header("Content-Type", "application/json")
-                .body(body)
-                .post(baseUrl + uri);
+                .get(baseUrl + uri);
         return response;
     }
 

@@ -33,7 +33,9 @@ public class JiraAPIActions {
         String addCommentJSON = jsonBuilder.addCommentJSON(comment);
         return httpSender.put(addCommentJSON, ApiPATH.ISSUE,issueID );
     }
-
+    public Response JQLSerch( String JQLRquest){
+        return httpSender.get( ApiPATH.JQLSearch + JQLRquest);
+    }
 
 
 }

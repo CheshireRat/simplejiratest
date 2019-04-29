@@ -16,7 +16,7 @@ public class APITests {
 
     JsonBuilder jsonBuilder ;
     String cookie;
-    String issueID = "QAAUT7-742";  //have to be exists
+    String issueID = "QAAUT7-740";  //have to be exists
 
     @Test
     public void login() {
@@ -104,29 +104,10 @@ public class APITests {
 
     @Test
     public void JQLSearchIssue() {
-        String baseUrl = "http://jira.hillel.it:8080/rest/api/2/search?jql=";
-        String jqlString = "project=QAAUT7&maxResults=1&creator=currentUser()";
-        String  totalReported = null;
-        StringBuilder builder = new StringBuilder();
-        Response response = given()
-                .auth().preemptive().basic(PropertyReader.readValue("login"), PropertyReader.readValue("password"))
-                .header("Content-Type", "application/json")
-                .get(builder
-                        .append(baseUrl)
-                        .append(jqlString)
-                        .toString());
-
-        JSONObject jObj = null;
-        try {
-            jObj = new JSONObject(response.asString());
-            totalReported = jObj.getString("total");
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
-        int result = Integer.parseInt(totalReported);
-
+        JiraAPIActions jiraAPIActions = new JiraAPIActions();
+        Response response = jiraAPIActions.JQLSerch("id=" + issueID);
         Assert.assertTrue(response.statusCode() == 200);
-        Assert.assertTrue(result > 50);
+        Assert.assertTrue(response.prettyPrint().contains("\"total\": 1") );
 
 
         //not worked request!!! just as an example
